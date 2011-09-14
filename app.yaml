@@ -1,0 +1,39 @@
+application: make-good
+version: 1
+runtime: python
+api_version: 1
+
+builtins:
+- remote_api: on
+
+inbound_services:
+- warmup
+
+handlers:
+- url: /_ah/queue/deferred
+  script: djangoappengine/deferred/handler.py
+  login: admin
+
+- url: /_ah/stats/.*
+  script: djangoappengine/appstats/ui.py
+
+- url: /media/admin
+  static_dir: django/contrib/admin/media
+  expiration: '0'
+
+- url: /css
+  static_dir: txm/static/css
+
+- url: /js
+  static_dir: txm/static/js
+
+- url: /google2c87c0f173d8c94e\.html 
+  static_files: txm/static/google2c87c0f173d8c94e.html 
+  upload: txm/static/google2c87c0f173d8c94e\.html 
+
+- url: /favicon\.ico
+  static_files: txm/static/favicon.ico
+  upload: txm/static/favicon\.ico
+
+- url: /.*
+  script: djangoappengine/main/main.py
