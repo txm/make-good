@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    dir="{% if LANGUAGE_BIDI %}rtl{% else %}ltr{% endif %}"
+    xml:lang="{% firstof LANGUAGE_CODE 'en' %}"
+    lang="{% firstof LANGUAGE_CODE 'en' %}">
+  <head>
+    <title>{% block title %}{% endblock %} - TXM Blog</title>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi?key={{ google_loader_key }}"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/flick/jquery-ui.css" type="text/css" rel="Stylesheet" />
+
+    <link href="/css/styles.css" type="text/css" rel="Stylesheet" />
+
+    {% block css %}
+    {% endblock %}
+
+    {% block preload_js %}
+    {% endblock %}
+
+    {% block extra-head %}{% endblock %}
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-25658129-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+
+  </head>
+
+  <body>
+    <div id="header" class="layout">
+      <h1><a id="logo" href="/">TXM Blog</a></h1>
+    </div><!-- /header -->
+
+    <div class="columns">
+
+      <div id="content" class="column">
+        {% block content-header %}
+          {% if error %}<div class="error">{{ error }}</div>{% endif %}
+          {% if info %}<div class="info">{{ info }}</div>{% endif %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="info">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endblock %}
+
+        {% block content %}{% endblock %}
+      </div><!-- /content -->
+
+      <div id="sidebar" class="column">
+        {% block sidebar %}
+        {% endblock %}
+      </div><!-- /sidebar -->
+
+    </div><!-- /columns -->
+
+    <div id="footer" class="layout">
+      <ul>
+        <li>Powered by <a href="http://www.allbuttonspressed.com/projects/django-nonrel">Django-nonrel</a></li>
+        <li><a class="logo" href="http://p.ota.to/"><img alt="logo" src="http://p.ota.to/s/i/logo.png" /></a></li>
+        <li><a class="logo" href="http://www.txm.net/"><img alt="logo" src="http://www.txm.net/images/txm_logo_whte_red_150.png" /></a></li>
+        <li><a class="logo" href="http://code.google.com/appengine/"><img alt="logo" src="http://code.google.com/appengine/images/appengine_lowres.png" /></a></li>
+        <li><a class="logo" href="https://www.djangoproject.com/"><img alt="logo" src="https://www.djangoproject.com/m/img/site/hdr_logo.gif" /></a></li>
+      </ul>
+    </div><!-- /footer -->
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $( "#tabs" ).tabs();
+      });
+    </script>
+
+    {% block js %}
+    {% endblock %}
+
+  </body>
+</html>

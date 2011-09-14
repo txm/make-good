@@ -1,0 +1,107 @@
+body {
+    margin:0; 
+    padding:0; 
+    height:100%; 
+    font-family: Verdana, Tahoma, Helvetica, Arial;
+}
+
+div {
+    height:100%; 
+}
+
+/*DL, DT, DD TAGS LIST DATA*/
+dl {
+    margin: 0;
+    padding: 0;
+}
+ 
+dl dt {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+ 
+dl dd {
+    margin: 0 0 1em 0;
+    padding: 0;
+}
+
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul.actions li {
+    float: left;
+    padding: 10px;
+}
+
+#footer ul li {
+    float: left;
+    padding: 10px;
+}
+
+#logo {
+    
+}
+
+.layout {
+    border-radius:15px;
+    margin: 30px;
+    width: 86%;
+    padding: 2%;
+}
+
+#header {
+    border: 7px #0073EA dashed;
+    height: 85px;
+}
+
+#footer {
+    border: 7px #FF0084 dashed;
+    height: 150px;
+}
+
+#tabs {
+    border: 7px gray dashed;
+    margin: 30px;
+}
+
+#blogs {
+    border: 7px gray dashed;
+    margin: 30px;
+}
+
+#create {
+    border: 7px gray dashed;
+    background-color: lightgray;
+    margin: 30px;
+}
+
+.delete {
+    background: url("http://fffsilk.appspot.com/application_form_delete.png") no-repeat;
+    padding-left: 20px;
+}
+
+.edit {
+    background: url("http://fffsilk.appspot.com/application_form_edit.png") no-repeat;
+    padding-left: 20px;
+}
+
+hr {
+    clear: left;
+}
+
+textarea, input {
+    width: 50%;
+    border: 1px solid #781351;
+    background: #E8E8E8;
+    border: 2px outset silver;
+}
+
+li label {
+    display:block;
+}
+

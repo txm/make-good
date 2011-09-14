@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}TXM Blog{% endblock %}
+
+{% block content %}
+
+<div class="blog">
+
+  <div id="tabs" class="layout">
+
+        <div class="blog">
+
+          <h3>{{blog.title}}</h3>
+
+          <p>{{blog.body}}</p>
+
+          <strong><a href="mailto:{{blog.author}}">{{blog.author}}</a></strong>
+          <p><em>{{blog.date}}</em></p>
+          <p><em>{% if blog.tweeted%}Tweeted{% else %}Not tweeted{% endif %}</em></p>
+
+          <hr />
+
+        </div>
+
+  </div><!-- /tabs -->
+
+</div><!-- /blog -->
+
+{% endblock %}
