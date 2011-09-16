@@ -8,15 +8,18 @@ import os
 
 if os.path.abspath(os.path.dirname(__file__)) == '/Users/andy/Sites/potato':
   ENVIRONMENT = 'development'
-  GOOGLELOADERKEY = 'ABQIAAAAmHuhDSBEw1ehYJgA4v432RT2yXp_ZAY8_ufC3CFXhHIE1NvwkxRfQsTXJt7aKwRQtHE4cj2sjt_JkA'
+  GOOGLELOADERKEY = 'TBC'
+  GOOGLEANALYTICSKEY = 'UA-TBC-1'
 
 elif os.path.abspath(os.path.dirname(__file__)) == 'somestagingpath':
   ENVIRONMENT = 'staging'
   GOOGLELOADERKEY = 'TBC'
+  GOOGLEANALYTICSKEY = 'UA-TBC-1'
 
 else:
   ENVIRONMENT = 'production'
-  GOOGLELOADERKEY = 'ABQIAAAAmHuhDSBEw1ehYJgA4v432RRnlEyiPxHiLjMS5smxw7QIAsiTHhT2hknFkQ9zd5tD9xPKcDOCgu9Yuw'
+  GOOGLELOADERKEY = 'TBC'
+  GOOGLEANALYTICSKEY = 'UA-TBC-1'
 
 
 # Activate django-dbindexer for the default database
@@ -26,7 +29,7 @@ DATABASES['gae'] = {'ENGINE': 'djangoappengine.db'}
 
 AUTOLOAD_SITECONF = 'indexes'
 
-SECRET_KEY = 'TYUImksdcjknkdYGKJKBHVGHNJJVHYUVWDNWJFonerfneonefd'
+SECRET_KEY = '56tyubhewjfdsdYGKJKBHVGHNJJVHYUVWDNWJFonerfneonefd'
 
 OAUTH_APP_SETTINGS = {}
 
