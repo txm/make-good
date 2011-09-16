@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Make:good{% endblock %}
+
+{% block content %}
+
+  <h2>some page </h2>
+
+
+    {% for category in categories %}
+    <dl class="category" id="category-{{ category|safe }}">
+
+      <dt>{{ category|safe }}</dt>
+
+      {% for page in category.page_set.all %}
+        <dd><a href="/p/{{ page.id }}/{{page|safe}}">{{page|safe}}</a></dd>
+      {% endfor %}
+
+    </dl>
+    {% endfor %}
+
+{% endblock %}

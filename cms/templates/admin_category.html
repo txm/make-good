@@ -1,0 +1,40 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Make:good - Admin!{% endblock %}
+
+{% block content %}
+
+  <div id="admin_category">
+
+    <h2>About</h2>
+
+      <form method="post">{% csrf_token %}
+
+        <ul>
+        {{ form.as_ul }}
+        {{ html|safe }}
+        </ul>
+
+      <input type="submit" value="Submit" />
+
+    </form>
+
+  </div><!-- /admin_category -->
+
+  <div class="admin_category">
+
+
+    <dl>
+      {% for category in categories %}
+      <dt>Category name: {{ category.name }}</dt>
+
+        {% for page in category.page_set.all %}
+          <dl>{{ page.name }}</dl>
+        {% endfor %}
+
+      {% endfor %}
+    </dl>
+
+  </div><!-- /admin_site_nav -->
+
+{% endblock %}

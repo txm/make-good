@@ -1,0 +1,36 @@
+{% extends 'admin_base.html' %}
+
+{% block title %}Make:good - Admin!{% endblock %}
+
+{% block content %}
+
+  <div id="admin_about">
+
+    <h2>About</h2>
+
+      <form method="post">{% csrf_token %}
+
+        <ul>
+        {{ form.as_ul }}
+        {{ html|safe }}
+        </ul>
+
+      <input type="submit" value="Submit" />
+
+    </form>
+
+  </div><!-- /admin_about -->
+
+  <div class="admin_about">
+
+    <ul>
+      <li>Name: {{ about.name }}</li>
+      <li>Email: {{ about.email }}</li>
+      <li>Telephone: {{ about.telephone }}</li>
+      <li>Address: {{ about.address }}</li>
+      <li>Blurb: {{ about.blurb }}</li>
+    </ul>
+
+  </div><!-- /admin_about -->
+
+{% endblock %}
