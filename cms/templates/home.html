@@ -1,122 +1,29 @@
 {% extends 'base.html' %}
-{% block title %}TXM Blog{% endblock %}
+{% block title %}Make:good{% endblock %}
 
 {% block content %}
 
-<div class="blog">
+  <h2>About this Make:good</h2>
 
-  <div id="tabs" class="layout">
+    {% if bg_image %}
+      <img src="/media/bg_image/{{ bg_image.id }}" alt="{{ bg_image.title }}" id="bg_image" />
+    {% else %}
+      no background image available
+    {% endif %}
 
-    <ul>
-      <li><a href="#tabs-1">Blog</a></li>
-      <li><a href="#tabs-2">Tweets</a></li>
-      <li><a href="#tabs-3">About</a></li>
-    </ul>
 
-    <div id="tabs-1">
+    {% for category in categories %}
+    <dl class="category" id="category-{{ category|safe }}">
 
-      <h2>Blogs</h2>
+      <dt>{{ category|safe }}</dt>
 
-        {% for blog in blogs %}
-        <div class="blog">
+      {% for page in category.page_set.all %}
+        <dd><a href="/p/{{ page.id }}/{{page|safe}}">{{page|safe}}</a></dd>
+      {% endfor %}
 
-          <h3>{{blog.title}}</h3>
+    </dl>
+    {% endfor %}
 
-          <p><a href="/blog/{{blog.id}}">{{blog.body|truncatewords:5}} &#8230; <em>read more</em></a></p>
-
-          <!--
-          <strong><a href="mailto:{{blog.author}}">{{blog.author}}</a></strong>
-          <p><em>{{blog.date}}</em></p>
-          <p><em>{% if blog.tweeted%}Tweeted{% else %}Not tweeted{% endif %}</em></p>
-          -->
-
-          <hr />
-
-        </div>
-        {% endfor %}
-
-    </div><!-- /tabs-1 -->
-
-    <div id="tabs-2">
-
-<script src="http://widgets.twimg.com/j/2/widget.js"></script>
-<script>
-new TWTR.Widget({
-  version: 2,
-  type: 'profile',
-  rpp: 4,
-  interval: 30000,
-  width: 250,
-  height: 300,
-  theme: {
-    shell: {
-      background: '#333333',
-      color: '#ffffff'
-    },
-    tweets: {
-      background: '#000000',
-      color: '#ffffff',
-      links: '#4aed05'
-    }
-  },
-  features: {
-    scrollbar: false,
-    loop: false,
-    live: false,
-    hashtags: true,
-    timestamp: true,
-    avatars: false,
-    behavior: 'all'
-  }
-}).render().setUser('txmblog').start();
-</script>
-
-    </div><!-- /tabs-2 -->
-
-    <div id="tabs-3">
-
-      <h2>About this blog</h2>
-
-      <blockquote>
-
-        <p><em>"Make us an ultra-simple blogging tool (the simpler the better) with
-           create, edit, delete functionality for articles (using Django on App Engine). </em></p>
-
-        <p><em>Feel free to follow online examples for inspiration but we'd appreciate
-         it if you write your own solution, so that we can assess your coding style. Also, feel free to add to the brief as you see fit, to make it your own."</em></p>
-
-        <p><em>Here are a few resources that you may find helpful:"</em></p>
-
-        <pre>
-      App Engine:
-      http://code.google.com/appengine/
-      http://code.google.com/appengine/docs/python/overview.html
-      There's an example "hello world" app in the docs, which is good to get the idea of 
-      App Engine on its own (without Django), which is probably a good idea to do first.
-        </pre>
-
-        <pre>
-      Django:
-      http://docs.djangoproject.com/en/dev/intro/tutorial01/ 
-      (the getting started tutorial with the voting poll - explains the basic concepts of Django)
-        </pre>
-
-        <pre>
-      Django on App Engine:
-      This requires 3 bits of magic to bring it all together:
-      http://www.allbuttonspressed.com/projects/djangoappengine
-      http://www.allbuttonspressed.com/projects/django-nonrel
-      http://www.allbuttonspressed.com/projects/djangotoolbox
-        </pre>
-
-      </blockquote>
-
-        <a href="/admin/"><img src="http://fffsilk.appspot.com/application_form.png" alt="admin this blog" />Admin</a>
-
-    </div><!-- /tabs-3 -->
-
-  </div><!-- /tabs -->
-
-</div><!-- /blog -->
+  <a href="/admin/"><img src="http://fffsilk.appspot.com/application_form.png" alt="admin this blog" />Admin</a>
 
 {% endblock %}

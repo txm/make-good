@@ -1,63 +1,36 @@
-{% extends 'base.html' %}
-{% block title %}TXM Blog - Admin!{% endblock %}
+{% extends 'admin_base.html' %}
+{% block title %}Make:good - Admin!{% endblock %}
 
 {% block content %}
 
-  <div id="create" class="layout">
+  <div id="admin_menu">
 
-    <h2>Blog admin</h2>
+    <h2>Menu</h2>
 
-      <form action="?id={{ id|safe }}" method="post">{% csrf_token %}
+    <ul>
+      <li><a href="/admin/about">About</a></li> 
+      <li><a href="/admin/style">Styles</a></li> 
+      <li><a href="/admin/bg_image">Backgrounds</a></li> 
+      <li><a href="/admin/category">Categories</a></li> 
+      <li><a href="/admin/page">Pages</a></li> 
+    </ul>
 
-        <ul>
-        {{ form.as_ul }}
-        {{ html|safe }}
-        </ul>
+  </div><!-- /admin_menu -->
 
-      <input type="submit" value="Submit" />
+  <div id="tools_menu">
 
-    </form>
+    <h2>Tools</h2>
 
-  </div><!-- /tabs -->
+    <ul>
+      <li><a href="http://www.google.com/webmasters/tools/">Webmaster Tools</a></li> 
+      <li><a href="http://www.google.com/analytics/">Analytics</a></li> 
+      <li><a href="http://www.gmail.com">Gmail</a></li> 
+      <li><a href="http://www.google.com/adsense/">Adsense</a></li> 
+      <li><a href="http://adwords.google.com/">Adwords</a></li> 
+      <li><a href="http://appengine.google.com">Appengine</a></li> 
+      <li><a href="http://googlewebmastercentral.blogspot.com/">Webmaster Central Blog</a></li> 
+    </ul>
 
-
-  <div id="blogs" class="layout">
-
-    <h3>Blog posts</h3>
-
-    {% for blog in blogs %}
-
-      <div class="blog">
-
-        <dl>
-            <dt><label>Title:</label></dt>
-            <dd>{{blog.title}}</dd>
- 
-            <dt><label>Body:</label></dt>
-            <dd>{{blog.body}}</dd>
- 
-            <dt><label>Author:</label></dt>
-            <dd><a href="mailto:{{blog.author}}">{{blog.author}}</a></dd>
- 
-            <dt><label>Date:</label></dt>
-            <dd>{{blog.date}}</dd>
- 
-            <dt><label>Tweeted:</label></dt>
-            <dd>{{blog.tweeted}}</dd>
-
-        </dl>
-
-        <ul class="actions">
-          <li><a class="edit"   href="/admin/edit/?id={{blog.id}}">edit</a></li>
-          <li><a class="delete" href="/admin/delete/?id={{blog.id}}">delete</a></li>
-        </ul><!-- /actions -->
-
-      </div><!-- /blog -->
-
-      <hr />
-
-    {% endfor %}
-
-  </div><!-- /blogs -->
+  </div><!-- /tools_menu -->
 
 {% endblock %}

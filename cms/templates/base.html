@@ -4,7 +4,7 @@
     xml:lang="{% firstof LANGUAGE_CODE 'en' %}"
     lang="{% firstof LANGUAGE_CODE 'en' %}">
   <head>
-    <title>{% block title %}{% endblock %} - TXM Blog</title>
+    <title>{% block title %}{% endblock %} - Make:good</title>
 
     <script type="text/javascript" src="https://www.google.com/jsapi?key={{ google_loader_key }}"></script>
 
@@ -26,7 +26,7 @@
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-25658129-1']);
+      _gaq.push(['_setAccount', {{ google_analytics_key }} ]);
       _gaq.push(['_trackPageview']);
 
       (function() {
@@ -41,7 +41,8 @@
 
   <body>
     <div id="header" class="layout">
-      <h1><a id="logo" href="/">TXM Blog</a></h1>
+      <h1><a id="logo" href="/">Make:good</a></h1>
+
     </div><!-- /header -->
 
     <div class="columns">
@@ -68,18 +69,19 @@
     </div><!-- /columns -->
 
     <div id="footer" class="layout">
+
       <ul>
-        <li>Powered by <a href="http://www.allbuttonspressed.com/projects/django-nonrel">Django-nonrel</a></li>
-        <li><a class="logo" href="http://p.ota.to/"><img alt="logo" src="http://p.ota.to/s/i/logo.png" /></a></li>
-        <li><a class="logo" href="http://www.txm.net/"><img alt="logo" src="http://www.txm.net/images/txm_logo_whte_red_150.png" /></a></li>
-        <li><a class="logo" href="http://code.google.com/appengine/"><img alt="logo" src="http://code.google.com/appengine/images/appengine_lowres.png" /></a></li>
-        <li><a class="logo" href="https://www.djangoproject.com/"><img alt="logo" src="https://www.djangoproject.com/m/img/site/hdr_logo.gif" /></a></li>
+        <li>{{ footer.name }}</li>
+        <li>{{ footer.email }}</li>
+        <li>{{ footer.telephone }}</li>
+        <li>{{ footer.address }}</li>
+        <li>{{ footer.blurb }}</li>
       </ul>
+
     </div><!-- /footer -->
 
     <script type="text/javascript">
       $(document).ready(function() {
-        $( "#tabs" ).tabs();
       });
     </script>
 
