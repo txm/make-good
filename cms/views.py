@@ -322,6 +322,7 @@ def admin_style(request):
             style = Style.objects.order_by('id').reverse()[0]
             form = StyleForm(instance=style)
         else:
+            style = False
             form = StyleForm()
 
     return render_to_response('admin_style.html', { 'form': form, 'style' : style }, context_instance=RequestContext(request))
