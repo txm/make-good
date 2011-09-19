@@ -1,0 +1,43 @@
+{% extends 'admin_base.html' %}
+{% block title %}Make:good - Admin!{% endblock %}
+
+{% block content %}
+
+  <div id="create" class="layout">
+
+    <h2>Background images</h2>
+
+    {% if message %}<p class="message">{{ message }}</p>{% endif %}
+
+    <p class="notice">
+      Cath: Edit the image name and/or replace the image.
+    </p>
+
+      <form enctype="multipart/form-data" method="post">{% csrf_token %}
+
+        <ul>
+        {{ form.as_ul }}
+        {{ html|safe }}
+        </ul>
+
+      <input type="hidden" name="bg_image_id" value="{{ bg_image.id }}" />
+
+      <input type="submit" value="Submit" />
+
+    </form>
+
+  </div><!-- /tabs -->
+
+  <div id="bg_image">
+
+    <ul>
+      <li>
+        <a href="/admin/bg_image/delete/{{ bg_image.id }}" class="icon"><span class="delete">Delete</span></a>
+        {{ bg_image.id }} {{ bg_image.title }} {{ bg_image.author }} {{ bg_image.image }} {{ bg_image.file_name }} {{ bg_image.content_type }} {{ bg_image.date_inserted }}
+        <img src="/media/bg_image/{{ bg_image.id }}" alt="{{ bg_image.title }}" class="thumb" />
+      </li> 
+    </ul>
+
+  </div><!-- /bg_image -->
+
+{% endblock %}
