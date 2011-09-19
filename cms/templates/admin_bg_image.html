@@ -7,6 +7,16 @@
 
     <h2>Background images</h2>
 
+    {% if message %}<p class="message">{{ message }}</p>{% endif %}
+
+    <p class="notice">
+      Cath: here you can upload background images for the homepage.  
+      The image will will picked at random for each user/visit.  
+      The maximum image size is a little under 1mb.
+      You <em>should</em> compress the image as much as you can bear to do so, as this will speed up page load times for your users.
+      If page load times are a problem we can look in to a couple of different solutions.
+    </p>
+
       <form enctype="multipart/form-data" method="post">{% csrf_token %}
 
         <ul>
@@ -25,8 +35,10 @@
     <ul>
       {% for bg_image in bg_images %}
       <li>
+        <a href="/admin/bg_image/delete/{{ bg_image.id }}" class="icon"><span class="delete">Delete</span></a>
+        <a href="/admin/bg_image/edit/{{ bg_image.id }}" class="icon"><span class="edit">Edit</span></a>
         {{ bg_image.id }} {{ bg_image.title }} {{ bg_image.author }} {{ bg_image.image }} {{ bg_image.file_name }} {{ bg_image.content_type }} {{ bg_image.date_inserted }}
-        <img src="/media/bg_image/{{ bg_image.id }}" alt="{{ bg_image.title }}" />
+        <img src="/media/bg_image/{{ bg_image.id }}" alt="{{ bg_image.title }}" class="thumb" />
       </li> 
       {% endfor %}
     </ul>

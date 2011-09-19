@@ -7,6 +7,10 @@
 
     <h2>Menu</h2>
 
+    {% if message %}<p class="message">{{ message }}</p>{% endif %}
+
+    <p class="notice">Hi Cath, this is a functional view of your new CMS.  Pretty colours and lined up text to follow!</p>
+
     <ul>
       <li><a href="/admin/about">About</a></li> 
       <li><a href="/admin/style">Styles</a></li> 
@@ -20,6 +24,8 @@
   <div id="tools_menu">
 
     <h2>Tools</h2>
+
+    <p class="notice">These are external sites that you may or may not use.</p>
 
     <ul>
       <li><a href="http://www.google.com/webmasters/tools/">Webmaster Tools</a></li> 

@@ -1,0 +1,103 @@
+/*
+ * backgound image 
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+
+img#bg_image {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -5000;
+}
+ 
+img.thumb {
+  max-height: 300px;
+  max-width: 300px;
+}
+
+.transparent {
+  background: url(/images/transparent_black.png);
+  color: white;
+}
+
+.bar {
+  position:relative;
+  top: 220px;
+  clear: both;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 150px;
+  padding-right: 150px;
+}
+
+.bar > ul {
+  list-style-type: none;
+}
+
+.category {
+  position:relative;
+  top: 200px;
+  width: 150px;
+  float: left;
+  margin-top: 10px;
+  margin-left: 60px;
+  height: 200px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+
+/*
+ * icons
+ */
+
+a.icon {
+  /* background:url(img/button.gif); */
+  display:block;
+  /* color:#555555; */
+  /* font-weight:bold; */
+  height:30px;
+  line-height:29px;
+  margin-bottom:14px;
+  text-decoration:none;
+  width:30px;
+}
+
+a:hover.icon {
+  color:#0066CC;
+}
+
+.delete {
+  background:url(http://fffsilk.appspot.com/application_delete.png) no-repeat 10px 8px;
+  text-indent:30px;
+  display:block;
+}
+
+.edit {
+  background:url(http://fffsilk.appspot.com/application_edit.png) no-repeat 10px 8px;
+  text-indent:30px;
+  display:block;
+}
+
+
+
+.message {
+  border: green dashed 5px;
+  padding: 20px;
+  margin: 20px;
+  width: 400px;
+}
+.notice {
+  border: orange dashed 5px;
+  padding: 20px;
+  margin: 20px;
+  width: 400px;
+}

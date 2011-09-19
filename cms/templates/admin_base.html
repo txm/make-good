@@ -11,9 +11,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
+    <script src="/js/jHtmlArea-0.7.0.min.js"></script>
+
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/flick/jquery-ui.css" type="text/css" rel="Stylesheet" />
 
     <link href="/css/styles.css" type="text/css" rel="Stylesheet" />
+    <link href="/css/jHtmlArea.css" type="text/css" rel="Stylesheet" />
 
     {% block css %}
     {% endblock %}
@@ -74,6 +77,9 @@
 
     <script type="text/javascript">
       $(document).ready(function() {
+        $(function(){
+          $(".wysiwyg").htmlarea();
+        });
       });
     </script>
 

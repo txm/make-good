@@ -14,6 +14,8 @@
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/flick/jquery-ui.css" type="text/css" rel="Stylesheet" />
 
     <link href="/css/styles.css" type="text/css" rel="Stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/assets/dynamic.css" />
+
 
     {% block css %}
     {% endblock %}
@@ -40,6 +42,11 @@
   </head>
 
   <body>
+
+    {% if bg_image %}
+      <img src="/media/bg_image/{{ bg_image.id }}" alt="{{ bg_image.title }}" id="bg_image" />
+    {% endif %}
+
     <div id="header" class="layout">
       <h1><a id="logo" href="/">Make:good</a></h1>
 
@@ -70,13 +77,15 @@
 
     <div id="footer" class="layout">
 
-      <ul>
-        <li>{{ footer.name }}</li>
-        <li>{{ footer.email }}</li>
-        <li>{{ footer.telephone }}</li>
-        <li>{{ footer.address }}</li>
-        <li>{{ footer.blurb }}</li>
-      </ul>
+      <div class="bar transparent">
+        <ul>
+          <li>{{ footer.name }}</li>
+          <li>{{ footer.email }}</li>
+          <li>{{ footer.telephone }}</li>
+          <li>{{ footer.address }}</li>
+          <li>{{ footer.blurb }}</li>
+        </ul>
+      </div><!-- /transparent -->
 
     </div><!-- /footer -->
 

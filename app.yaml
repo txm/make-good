@@ -22,10 +22,13 @@ handlers:
   expiration: '0'
 
 - url: /css
-  static_dir: cms/static/css
+  static_dir: static/css
 
 - url: /js
-  static_dir: cms/static/js
+  static_dir: static/js
+
+- url: /images
+  static_dir: static/images
 
 - url: /google2c87c0f173d8c94e\.html 
   static_files: cms/static/google2c87c0f173d8c94e.html 

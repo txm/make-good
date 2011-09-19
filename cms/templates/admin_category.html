@@ -6,7 +6,17 @@
 
   <div id="admin_category">
 
-    <h2>About</h2>
+    <h2>Categories</h2>
+
+    {% if message %}<p class="message">{{ message }}</p>{% endif %}
+
+    <p class="notice">
+        Cath: You can add a new Category, or delete/edit existing Categories.  
+        A Category is just a grouping of Pages.  
+        You should aim for about 3 Categories as these are lined up horizontally on the home page.
+        If you want more than that we will have to redesign the homepage to fit.
+        If you delete a Category then the Page will still exist, but will not be linked to on the homepage.
+    </p>
 
       <form method="post">{% csrf_token %}
 
@@ -31,6 +41,9 @@
         {% for page in category.page_set.all %}
           <dl>{{ page.name }}</dl>
         {% endfor %}
+
+      <dt><a href="/admin/category/delete/{{ category.id }}" class="icon"><span class="delete">Delete</span></a></dt>
+      <dt><a href="/admin/category/edit/{{ category.id }}" class="icon"><span class="edit">Edit</span></a></dt>
 
       {% endfor %}
     </dl>

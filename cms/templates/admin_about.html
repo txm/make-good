@@ -8,6 +8,10 @@
 
     <h2>About</h2>
 
+    {% if message %}<p class="message">{{ message }}</p>{% endif %}
+
+    <p class="notice">Cath: The About details appear as the footer to your home page, currently as a full page width grey translucent rectangle.</p>
+
       <form method="post">{% csrf_token %}
 
         <ul>
@@ -23,13 +27,13 @@
 
   <div class="admin_about">
 
-    <ul>
-      <li>Name: {{ about.name }}</li>
-      <li>Email: {{ about.email }}</li>
-      <li>Telephone: {{ about.telephone }}</li>
-      <li>Address: {{ about.address }}</li>
-      <li>Blurb: {{ about.blurb }}</li>
-    </ul>
+    <dd>
+      <dt>Name: </dt><dl>{{ about.name }}</dl>
+      <dt>Email: </dt><dl>{{ about.email }}</dl>
+      <dt>Telephone: </dt><dl>{{ about.telephone }}</dl>
+      <dt>Address: </dt><dl>{{ about.address }}</dl>
+      <dt>Blurb: </dt><dl>{{ about.blurb }}</dl>
+    </dd>
 
   </div><!-- /admin_about -->
 

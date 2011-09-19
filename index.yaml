@@ -35,3 +35,8 @@ indexes:
   properties:
   - name: __key__
     direction: desc
+
+- kind: cms_style
+  properties:
+  - name: __key__
+    direction: desc

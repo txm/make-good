@@ -5,15 +5,10 @@
 
   <h2>About this Make:good</h2>
 
-    {% if bg_image %}
-      <img src="/media/bg_image/{{ bg_image.id }}" alt="{{ bg_image.title }}" id="bg_image" />
-    {% else %}
-      no background image available
-    {% endif %}
-
+    {% if message %}<p class="message">{{ message }}</p>{% endif %}
 
     {% for category in categories %}
-    <dl class="category" id="category-{{ category|safe }}">
+    <dl class="category transparent" id="category-{{ category|safe }}">
 
       <dt>{{ category|safe }}</dt>
 
@@ -23,7 +18,5 @@
 
     </dl>
     {% endfor %}
-
-  <a href="/admin/"><img src="http://fffsilk.appspot.com/application_form.png" alt="admin this blog" />Admin</a>
 
 {% endblock %}

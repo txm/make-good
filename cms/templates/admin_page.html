@@ -6,12 +6,23 @@
 
   <div id="admin_page">
 
-    <h2>About</h2>
+    <h2>Pages</h2>
+
+    {% if message %}<p class="message">{{ message }}</p>{% endif %}
+
+    <p class="notice">
+        Cath: You can add a new Page, or delete/edit existing Pages.
+        A Page is of a defined type (e.g. Portfolio or Gallery or WYSIWYG).
+        You cannot create new types.
+        A Page also belongs to a Category and will be displayed under that Category on the homepage.
+        If you delete a Category then the Page will still exist, but will not be linked to on the homepage.
+    </p>
 
       <form method="post">{% csrf_token %}
 
         <ul>
-        {{ form.as_ul }}
+        {{ page_form.as_ul }}
+        {{ page_content_form.as_ul }}
         {{ html|safe }}
         </ul>
 
@@ -25,7 +36,11 @@
 
     <ul>
       {% for page in pages %}
-      <li>Page name: {{ page.name|safe }} <em>Category: {{ page.category }}</em> Type: {{ page.get_type_display }} </li>
+        <li>
+          Page name: {{ page.name|safe }} <em>Category: {{ page.category }}</em> Type: {{ page.get_type_display }} 
+          <a href="/admin/page/delete/{{ page.id }}" class="icon"><span class="delete">Delete</span></a>
+          <a href="/admin/page/edit/{{ page.id }}" class="icon"><span class="edit">Edit</span></a>
+        </li>
       {% endfor %}
     </ul>
 

@@ -1,8 +1,28 @@
 {% extends 'admin_base.html' %}
+
 {% block title %}Make:good - Admin!{% endblock %}
 
 {% block content %}
 
-Style
+    <h2>Styles</h2>
+
+    {% if message %}<p class="message">{{ message }}</p>{% endif %}
+
+    <p class="notice">Cath: here you get a small amount of control over the styles/css, the look and feel of the site.  We can add extra fields as you think of them.</p>
+
+  <div id="admin_style">
+
+      <form method="post">{% csrf_token %}
+
+        <ul>
+        {{ form.as_ul }}
+        {{ html|safe }}
+        </ul>
+
+      <input type="submit" value="Submit" />
+
+    </form>
+
+  </div><!-- /admin_style -->
 
 {% endblock %}
