@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import connection
 from django.db.models import Max
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
@@ -37,9 +37,12 @@ def home(request):
 
 def bg_image(request, bg_image_id):
 
-    bg_image = BackgroundImage.objects.get(id=bg_image_id)
-    response = HttpResponse(bg_image.image, mimetype=bg_image.content_type)
-    return response
+    try:
+        bg_image = BackgroundImage.objects.get(id=bg_image_id)
+        response = HttpResponse(bg_image.image, mimetype=bg_image.content_type)
+        return response
+    except:
+        raise Http404
 
 
 def page(request, page_id):
@@ -124,7 +127,8 @@ def admin_bg_image(request):
     else:
         form = BackgroundImageForm()
 
-    bg_images = BackgroundImage.objects.all()
+    bg_images = BackgroundImage.objects.all().values('id', 'title', 'author', 'file_name', 'content_type', 'date_inserted' )
+
 
     return render_to_response('admin_bg_image.html', {
         'form': form, 
@@ -135,17 +139,7 @@ def admin_bg_image(request):
 @login_required
 def admin_bg_image_edit(request, bg_image_id):
 
-    if request.method == 'GET':
-
-        bg_image = BackgroundImage.objects.get(id=bg_image_id)
-        form = BackgroundImageForm(instance=bg_image)
-
-        return render_to_response('admin_bg_image_edit.html', {
-            'form': form, 
-            'bg_image': bg_image,
-        }, context_instance=RequestContext(request))
-
-    elif request.method == 'POST':
+    if request.method == 'POST':
 
         bg_image = BackgroundImage.objects.get(id=bg_image_id)
         form = BackgroundImageForm(instance=bg_image, data=request.POST, files=request.FILES)
@@ -168,7 +162,14 @@ def admin_bg_image_edit(request, bg_image_id):
             return HttpResponseRedirect('/admin/bg_image/?message=' + urllib.quote_plus('Image has been updated') )
 
     else:
-        return HttpResponseRedirect('/admin/bg_image/?message=' + urllib.quote_plus('Image not found') )
+
+        bg_image = BackgroundImage.objects.get(id=bg_image_id)
+        form = BackgroundImageForm(instance=bg_image)
+
+        return render_to_response('admin_bg_image_edit.html', {
+            'form': form, 
+            'bg_image': bg_image,
+        }, context_instance=RequestContext(request))
 
 
 def css(request):
