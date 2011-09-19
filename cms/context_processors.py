@@ -5,7 +5,10 @@ from cms.models import *
 
 def api_keys(request):
 
-    footer = About.objects.order_by('id').reverse()[0]
+    if About.objects.count() > 0:
+        footer = About.objects.order_by('id').reverse()[0]
+    else:
+        footer = False
     
     if 'action' in request.GET:
         action = request.GET['action']
