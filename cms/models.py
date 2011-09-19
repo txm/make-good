@@ -39,13 +39,15 @@ class Category(models.Model):
         return self.name
 
 
+PAGE_TYPES = (
+    #('P', 'Portfolio'),
+    ('W', 'WYSIWYG'),
+    #('G', 'Gallery'),
+)
+
+
 class Page(models.Model):
     """ Page """
-
-    PAGE_TYPES = (
-        ('P', 'Portfolio'),
-        ('T', 'Text'),
-    )
 
     name = models.CharField(max_length=100, help_text='Page name')
     category = models.ForeignKey('Category')
@@ -55,10 +57,22 @@ class Page(models.Model):
         return self.name
 
 
+class PageWYSIWYG(models.Model):
+    """ PageWYSIWYG """
+
+    content = models.TextField(help_text='WYSIWYG content')
+    page = models.ForeignKey('Page')
+
+    def __unicode__(self):
+        return page.name
+
+
+
 class Style(models.Model):
     """ Page """
 
     name = models.CharField(max_length=100, help_text='Style name')
+    font_family = models.CharField(max_length=100, help_text='"comma separated", "and double quoted"')
 
     def __unicode__(self):
         return self.name

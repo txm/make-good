@@ -29,6 +29,15 @@ class PageForm(ModelForm):
         model = Page
 
 
+class PageWYSIWYGForm(ModelForm):
+        
+    content = forms.CharField( widget=forms.Textarea(attrs={'class':'wysiwyg', }))
+
+    class Meta:
+        model = PageWYSIWYG
+        exclude = ['page', ]
+
+
 class StyleForm(ModelForm):
         
     class Meta:

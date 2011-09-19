@@ -12,6 +12,11 @@ def api_keys(request):
     else:
         action = False
     
+    if 'message' in request.GET:
+        message = request.GET['message']
+    else:
+        message = False
+    
 
     return {
 
@@ -21,6 +26,7 @@ def api_keys(request):
         'footer': footer,
 
         'action': action,
+        'message': message,
 
     }
 
