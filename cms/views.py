@@ -7,10 +7,10 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 
 from google.appengine.api import users
+from google.appengine.api import memcache
 
 import random
 import urllib
-
 
 from cms.forms import *
 from cms.models import *
@@ -37,12 +37,19 @@ def home(request):
 
 def bg_image(request, bg_image_id):
 
-    try:
-        bg_image = BackgroundImage.objects.get(id=bg_image_id)
-        response = HttpResponse(bg_image.image, mimetype=bg_image.content_type)
-        return response
-    except:
-        raise Http404
+    key = 'bg_image'+bg_image_id
+
+    bg_image = memcache.get(key)
+
+    if bg_image is not None:
+        return HttpResponse(bg_image.image, mimetype=bg_image.content_type)
+    else:
+        try:
+            bg_image = BackgroundImage.objects.get(id=bg_image_id)
+            memcache.add(key, bg_image, 360000)
+            return HttpResponse(bg_image.image, mimetype=bg_image.content_type)
+        except:
+            raise Http404
 
 
 def page(request, page_id):
