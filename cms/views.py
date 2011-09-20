@@ -42,15 +42,17 @@ def bg_image(request, bg_image_id):
     bg_image = memcache.get(key)
 
     if bg_image is not None:
-        return HttpResponse(bg_image.image, mimetype=bg_image.content_type)
+        response = HttpResponse(bg_image.image, mimetype=bg_image.content_type)
     else:
         try:
             bg_image = BackgroundImage.objects.get(id=bg_image_id)
             memcache.add(key, bg_image, 360000)
-            return HttpResponse(bg_image.image, mimetype=bg_image.content_type)
+            response = HttpResponse(bg_image.image, mimetype=bg_image.content_type)
         except:
             raise Http404
 
+    response['Cache-Control'] = 'max-age=360000, must-revalidate'
+    return response
 
 def page(request, page_id):
 
