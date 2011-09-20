@@ -160,13 +160,15 @@ def admin_bg_image_edit(request, bg_image_id):
             bg_image_form = form.save(commit=False)
             bg_image_form.author = user
 
-            if 'image' in request.FILES and request.FILES['image'] is True:
+            if 'image' in request.FILES: #and request.FILES['image'] is True:
+
+                key = 'bg_image'+bg_image_id
+                memcache.delete(key)
 
                 bg_image_form.file_name = request.FILES['image']
                 bg_image_form.content_type = ('image/' + (str(request.FILES['image'])).partition('.')[2]).lower
 
             bg_image_form.save()
-
 
             return HttpResponseRedirect('/admin/bg_image/?message=' + urllib.quote_plus('Image has been updated') )
 
