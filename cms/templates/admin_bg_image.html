@@ -1,4 +1,7 @@
 {% extends 'admin_base.html' %}
+
+{% load filetransfers %}
+
 {% block title %}Make:good - Admin!{% endblock %}
 
 {% block content %}
@@ -17,14 +20,14 @@
       If page load times are a problem we can look in to a couple of different solutions.
     </p>
 
-      <form enctype="multipart/form-data" method="post">{% csrf_token %}
+    <form action="{{ upload_url }}" enctype="multipart/form-data" method="post">{% csrf_token %}
+      {% render_upload_data upload_data %}
 
-        <ul>
-        {{ form.as_ul }}
-        {{ html|safe }}
-        </ul>
+      <ul>
+        {{ form.as_ul|safe }}
+      </ul>
 
-      <input type="submit" value="Submit" />
+      <input type="submit" value="Upload" />
 
     </form>
 
@@ -37,8 +40,9 @@
       <li>
         <a href="/admin/bg_image/delete/{{ bg_image.id }}" class="icon"><span class="delete">Delete</span></a>
         <a href="/admin/bg_image/edit/{{ bg_image.id }}" class="icon"><span class="edit">Edit</span></a>
-        {{ bg_image.id }} {{ bg_image.title }} {{ bg_image.author }} {{ bg_image.image }} {{ bg_image.file_name }} {{ bg_image.content_type }} {{ bg_image.date_inserted }}
-        <img src="/media/bg_image/{{ bg_image.id }}" alt="{{ bg_image.title }}" class="thumb" />
+        {{ bg_image.id }} {{ bg_image.title }} 
+        <img src="{{ bg_image.url }}" alt="{{ bg_image.title }}" />
+        <img src="{{ bg_image.url_thumb }}" alt="{{ bg_image.title }}" class="thumb" />
       </li> 
       {% endfor %}
     </ul>

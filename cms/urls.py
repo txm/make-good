@@ -7,10 +7,11 @@ urlpatterns = patterns('',
 
     # Public handlers
 
-    ('^$',                     'cms.views.home'),
-    ('^media/bg_image/(\d+)$', 'cms.views.bg_image'),
-    ('^p/(\d+)/?.+$',          'cms.views.page'),
-    ('^assets/dynamic.css$',   'cms.views.css'),
+    ('^$',                           'cms.views.home'),
+    # using images.get_serving_url() instead .. for now .. investigate cache-control + memcache
+    #('^media/bg_image/(\d+)$',       'cms.views.bg_image'),
+    ('^p/(\d+)/?.+$',                'cms.views.page'),
+    ('^assets/dynamic.css$',         'cms.views.css'),
 
 
     # Admin handlers

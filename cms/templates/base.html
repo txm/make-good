@@ -44,7 +44,8 @@
   <body>
 
     {% if bg_image %}
-      <img src="/media/bg_image/{{ bg_image.id }}" alt="{{ bg_image.title }}" id="bg_image" />
+      <!-- img src="/media/bg_image/{{ bg_image.id }}" alt="{{ bg_image.title }}" id="bg_image" / -->
+      <img src="{{ bg_image.url }}" alt="{{ bg_image.title }}" id="bg_image" />
     {% endif %}
 
     <div id="header" class="layout">

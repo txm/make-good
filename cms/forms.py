@@ -8,7 +8,7 @@ class BackgroundImageForm(ModelForm):
         
     class Meta:
         model = BackgroundImage
-        exclude = ['author', 'content_type', 'file_name',]
+        exclude = ['author', 'date_inserted', 'blob_key', 'url', 'url_thumb', ]
 
 
 class AboutForm(ModelForm):

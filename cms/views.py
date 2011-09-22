@@ -3,11 +3,16 @@ from django.core.urlresolvers import reverse
 from django.db import connection
 from django.db.models import Max
 from django.http import HttpResponseRedirect, HttpResponse, Http404
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 
 from google.appengine.api import users
-from google.appengine.api import memcache
+####from google.appengine.api import memcache
+from google.appengine.api import images
+#from google.appengine.api import files
+#from __future__ import with_statement
+
+from filetransfers.api import prepare_upload, serve_file
 
 import random
 import urllib
@@ -35,24 +40,28 @@ def home(request):
     }, context_instance=RequestContext(request))
 
 
+
+
 def bg_image(request, bg_image_id):
 
-    key = 'bg_image'+bg_image_id
+    bg_image = get_object_or_404(BackgroundImage, id=bg_image_id)
+    return serve_file(request, bg_image.image)
 
-    bg_image = memcache.get(key)
+    key = 'bg_image_serve' + '-' + bg_image_id
 
-    if bg_image is not None:
-        response = HttpResponse(bg_image.image, mimetype=bg_image.content_type)
+####    bg_image_serve = memcache.get(key)
+
+    if bg_image_serve is not None:
+        response = bg_image_serve
     else:
-        try:
-            bg_image = BackgroundImage.objects.get(id=bg_image_id)
-            memcache.add(key, bg_image, 360000)
-            response = HttpResponse(bg_image.image, mimetype=bg_image.content_type)
-        except:
-            raise Http404
+        bg_image = get_object_or_404(BackgroundImage, id=bg_image_id)
+        response = serve_file(request, bg_image.image)
+####        memcache.add(key, response, 360000)
 
     response['Cache-Control'] = 'max-age=360000, must-revalidate'
     return response
+
+
 
 def page(request, page_id):
 
@@ -117,6 +126,8 @@ def admin_about(request):
 @login_required
 def admin_bg_image(request):
 
+    view_url = reverse('cms.views.admin_bg_image')
+
     if request.method == 'POST':
 
         form = BackgroundImageForm(request.POST, request.FILES)
@@ -128,25 +139,53 @@ def admin_bg_image(request):
             bg_image_form = form.save(commit=False)
             bg_image_form.author = user
             bg_image_form.file_name = request.FILES['image']
-            bg_image_form.content_type = ('image/' + (str(request.FILES['image'])).partition('.')[2]).lower
             bg_image_form.save()
 
-            return HttpResponseRedirect(request.META['PATH_INFO']+'?message=Updated')
+            #bg_image_form.content_type = ('image/' + (str(request.FILES['image'])).partition('.')[2]).lower
+
+            bg_image = BackgroundImage.objects.get(id=bg_image_form.id)
+            blob_key = bg_image.image.file.blobstore_info.key()._BlobKey__blob_key 
+            img = images.Image(blob_key=blob_key)
+            bg_image.blob_key = blob_key
+            bg_image.url = images.get_serving_url(blob_key)
+            bg_image.url_thumb = images.get_serving_url(blob_key, 200)
+            bg_image.save()
+
+            #bg_image = BackgroundImage.objects.get(id=bg_image_form.id)
+
+            #file_name = files.blobstore.create(mime_type='application/octet-stream')
+            #with files.open(file_name, 'a') as f:
+            #    f.write(bg_image.image)
+            #files.finalize(file_name)
+            #blob_key = files.blobstore.get_blob_key(file_name)
+
+            #bg_image.thumb_content_type = ('image/png').lower
+
+            #bg_image.save()
+
+            return HttpResponseRedirect('/admin/bg_image?message=' + 'Updated')
 
     else:
         form = BackgroundImageForm()
 
-    bg_images = BackgroundImage.objects.all().values('id', 'title', 'author', 'file_name', 'content_type', 'date_inserted' )
-
+    upload_url, upload_data = prepare_upload(request, view_url)
+    form = BackgroundImageForm()
+    #bg_images = BackgroundImage.objects.all().values('id', 'title', 'author', 'file_name', 'content_type', 'date_inserted' )
+    bg_images = BackgroundImage.objects.all().values()
 
     return render_to_response('admin_bg_image.html', {
         'form': form, 
         'bg_images': bg_images,
+        'upload_url': upload_url, 
+        'upload_data': upload_data,
     }, context_instance=RequestContext(request))
 
 
 @login_required
-def admin_bg_image_edit(request, bg_image_id):
+def admin_bg_image_edit(request, bg_image_id=None):
+
+    view_url = reverse('cms.views.admin_bg_image') #.'+bg_image_id)
+    view_url = view_url + 'edit/' + str(bg_image_id) # FFS!
 
     if request.method == 'POST':
 
@@ -161,14 +200,25 @@ def admin_bg_image_edit(request, bg_image_id):
             bg_image_form.author = user
 
             if 'image' in request.FILES: #and request.FILES['image'] is True:
-
-                key = 'bg_image'+bg_image_id
-                memcache.delete(key)
-
                 bg_image_form.file_name = request.FILES['image']
-                bg_image_form.content_type = ('image/' + (str(request.FILES['image'])).partition('.')[2]).lower
 
             bg_image_form.save()
+
+            bg_image = BackgroundImage.objects.get(id=bg_image_form.id)
+
+            blob_key = bg_image.image.file.blobstore_info.key()._BlobKey__blob_key
+            img = images.Image(blob_key=blob_key)
+            bg_image.blob_key = blob_key
+            bg_image.url = images.get_serving_url(blob_key)
+            bg_image.url_thumb = images.get_serving_url(blob_key, 200)
+
+            bg_image.save()
+
+            key = 'bg_image_serve' + '-' + str(bg_image.id)
+####            memcache.delete(key)
+
+            ## TODO memcache.add() here
+            ## Noel 07828 510 920
 
             return HttpResponseRedirect('/admin/bg_image/?message=' + urllib.quote_plus('Image has been updated') )
 
@@ -177,9 +227,13 @@ def admin_bg_image_edit(request, bg_image_id):
         bg_image = BackgroundImage.objects.get(id=bg_image_id)
         form = BackgroundImageForm(instance=bg_image)
 
+        upload_url, upload_data = prepare_upload(request, view_url)
+
         return render_to_response('admin_bg_image_edit.html', {
             'form': form, 
             'bg_image': bg_image,
+            'upload_url': upload_url, 
+            'upload_data': upload_data,
         }, context_instance=RequestContext(request))
 
 

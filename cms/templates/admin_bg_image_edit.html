@@ -1,4 +1,7 @@
 {% extends 'admin_base.html' %}
+
+{% load filetransfers %}
+
 {% block title %}Make:good - Admin!{% endblock %}
 
 {% block content %}
@@ -13,16 +16,16 @@
       Cath: Edit the image name and/or replace the image.
     </p>
 
-      <form enctype="multipart/form-data" method="post">{% csrf_token %}
+      <form action="{{ upload_url }}" enctype="multipart/form-data" method="post">{% csrf_token %}
+        {% render_upload_data upload_data %}
 
         <ul>
-        {{ form.as_ul }}
-        {{ html|safe }}
+        {{ form.as_ul|safe }}
         </ul>
 
-      <input type="hidden" name="bg_image_id" value="{{ bg_image.id }}" />
+        <input type="hidden" name="bg_image_id" value="{{ bg_image.id }}" />
 
-      <input type="submit" value="Submit" />
+        <input type="submit" value="Submit" />
 
     </form>
 
@@ -35,6 +38,8 @@
         <a href="/admin/bg_image/delete/{{ bg_image.id }}" class="icon"><span class="delete">Delete</span></a>
         {{ bg_image.id }} {{ bg_image.title }} {{ bg_image.author }} {{ bg_image.file_name }} {{ bg_image.content_type }} {{ bg_image.date_inserted }}
         <img src="/media/bg_image/{{ bg_image.id }}" alt="{{ bg_image.title }}" class="thumb" />
+        <img src="{{ bg_image.url }}" alt="{{ bg_image.title }}" class="" />
+        <img src="{{ bg_image.url_thumb }}" alt="{{ bg_image.title }}" class="" />
       </li> 
     </ul>
 

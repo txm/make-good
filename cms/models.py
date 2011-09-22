@@ -7,10 +7,13 @@ class BackgroundImage(models.Model):
     """ BackgroundImage """
 
     title = models.CharField(max_length=100, help_text='Background image title')
+    image = models.FileField(upload_to='bg_images/%Y/%m/%d/%H/%M/%S/')
+    #file_name = models.CharField(max_length=1000)
+    #content_type = models.CharField(max_length=100)
+    blob_key = models.TextField()
+    url = models.TextField()
+    url_thumb = models.TextField()
     author = models.EmailField(help_text='Your email')
-    image = BlobField(default=None)
-    file_name = models.CharField(max_length=1000)
-    content_type = models.CharField(max_length=100)
     date_inserted = models.DateField(blank=True, null=True, auto_now_add=1)
 
     def __unicode__(self):
